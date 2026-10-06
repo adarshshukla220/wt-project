@@ -1,3 +1,4 @@
+import "dotenv/config";
 import axios from "axios";
 
 import type {
@@ -5,8 +6,7 @@ import type {
   CreateProductData,
 } from "@/types/product";
 
-const API_URL = "http://localhost:3000/products";
-
+const API_URL = `${import.meta.env.VITE_API_URL}/products`;
 export const getProducts = async (): Promise<Product[]> => {
   const response = await axios.get<Product[]>(API_URL);
 
