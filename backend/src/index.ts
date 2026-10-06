@@ -16,7 +16,7 @@ await connectDB()
 app.use(
   "*",
   cors({
-    origin: process.env.CLIENT_URL || "",
+    origin:"https://shop.adarshshukla.cc.cd",
   }),
 );
 
