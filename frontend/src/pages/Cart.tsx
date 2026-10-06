@@ -1,16 +1,11 @@
 import { Link } from "react-router-dom";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import {
+  Minus,
+  Plus,
+  Trash2,
+} from "lucide-react";
 
 import { useCart } from "@/context/CartContext";
-
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 const Cart = () => {
   const {
@@ -24,171 +19,306 @@ const Cart = () => {
 
   if (cart.length === 0) {
     return (
-      <main className="min-h-screen bg-muted/40 px-6 py-12">
-        <div className="mx-auto max-w-4xl">
-          <Card>
-            <CardContent className="py-16 text-center">
-              <h1 className="text-2xl font-bold">
-                Your cart is empty
-              </h1>
+      <main
+        style={{
+          minHeight: "70vh",
+          background: "#f5f5f5",
+          padding: "48px 24px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "800px",
+            margin: "0 auto",
+            padding: "64px 20px",
+            textAlign: "center",
+            background: "#fff",
+            borderRadius: "12px",
+          }}
+        >
+          <h1>Your cart is empty</h1>
 
-              <p className="mt-2 text-muted-foreground">
-                Add some products to your cart.
-              </p>
+          <p style={{ color: "#737373" }}>
+            Add some products to your cart.
+          </p>
 
-              <Button
-                
-                className="mt-6"
-              >
-                <Link to="/">
-                  Continue Shopping
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+          <Link
+            to="/"
+            style={{
+              display: "inline-block",
+              marginTop: "20px",
+              padding: "11px 18px",
+              borderRadius: "7px",
+              background: "#111827",
+              color: "#fff",
+              textDecoration: "none",
+            }}
+          >
+            Continue Shopping
+          </Link>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-muted/40 px-6 py-12">
-      <div className="mx-auto max-w-5xl">
-
-        <div className="mb-8 flex items-center justify-between">
+    <main
+      style={{
+        minHeight: "70vh",
+        background: "#f5f5f5",
+        padding: "48px 24px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "28px",
+          }}
+        >
           <div>
-            <h1 className="text-3xl font-bold">
+            <h1 style={{ margin: 0 }}>
               Shopping Cart
             </h1>
 
-            <p className="text-muted-foreground">
+            <p style={{ color: "#737373" }}>
               Review your items before checkout.
             </p>
           </div>
 
-          <Button
-            variant="outline"
+          <button
             onClick={clearCart}
+            style={{
+              padding: "9px 14px",
+              border: "1px solid #d4d4d4",
+              borderRadius: "7px",
+              background: "#fff",
+              cursor: "pointer",
+            }}
           >
             Clear Cart
-          </Button>
+          </button>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-
-          <div className="space-y-4">
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "minmax(0, 1fr) 300px",
+            gap: "24px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+            }}
+          >
             {cart.map((item) => (
-              <Card key={item._id}>
-                <CardContent className="flex gap-5 p-5">
+              <div
+                key={item._id}
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  padding: "20px",
+                  background: "#fff",
+                  border: "1px solid #e5e5e5",
+                  borderRadius: "10px",
+                }}
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  style={{
+                    width: "110px",
+                    height: "110px",
+                    objectFit: "contain",
+                    background: "#f5f5f5",
+                    borderRadius: "8px",
+                  }}
+                />
 
-                  <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-lg bg-muted">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-contain p-2"
-                    />
-                  </div>
-
-                  <div className="flex flex-1 flex-col">
-
-                    <div className="flex justify-between gap-4">
-                      <div>
-                        <h2 className="font-semibold">
-                          {item.name}
-                        </h2>
-
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          ₹{item.price.toLocaleString("en-IN")}
-                        </p>
-                      </div>
-
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() =>
-                          removeFromCart(item._id)
-                        }
+                <div
+                  style={{
+                    flex: 1,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div>
+                      <h2
+                        style={{
+                          margin: 0,
+                          fontSize: "17px",
+                        }}
                       >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                        {item.name}
+                      </h2>
+
+                      <p
+                        style={{
+                          color: "#737373",
+                        }}
+                      >
+                        ₹
+                        {item.price.toLocaleString(
+                          "en-IN",
+                        )}
+                      </p>
                     </div>
 
-                    <div className="mt-auto flex items-center gap-2">
-
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                          decreaseQuantity(item._id)
-                        }
-                      >
-                        <Minus className="h-4 w-4" />
-                      </Button>
-
-                      <span className="w-8 text-center">
-                        {item.quantity}
-                      </span>
-
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() =>
-                          increaseQuantity(item._id)
-                        }
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
-
-                    </div>
+                    <button
+                      onClick={() =>
+                        removeFromCart(item._id)
+                      }
+                      style={{
+                        border: "none",
+                        background: "transparent",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <Trash2 size={18} />
+                    </button>
                   </div>
 
-                  <div className="font-bold">
-                    ₹{(
-                      item.price * item.quantity
-                    ).toLocaleString("en-IN")}
-                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <button
+                      onClick={() =>
+                        decreaseQuantity(item._id)
+                      }
+                      style={quantityButton}
+                    >
+                      <Minus size={15} />
+                    </button>
 
-                </CardContent>
-              </Card>
+                    <span
+                      style={{
+                        width: "30px",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.quantity}
+                    </span>
+
+                    <button
+                      onClick={() =>
+                        increaseQuantity(item._id)
+                      }
+                      style={quantityButton}
+                    >
+                      <Plus size={15} />
+                    </button>
+                  </div>
+                </div>
+
+                <strong>
+                  ₹
+                  {(
+                    item.price * item.quantity
+                  ).toLocaleString("en-IN")}
+                </strong>
+              </div>
             ))}
           </div>
 
-          <Card className="h-fit">
-            <CardHeader>
-              <CardTitle>
-                Order Summary
-              </CardTitle>
-            </CardHeader>
+          <div
+            style={{
+              height: "fit-content",
+              padding: "24px",
+              background: "#fff",
+              border: "1px solid #e5e5e5",
+              borderRadius: "10px",
+            }}
+          >
+            <h2>Order Summary</h2>
 
-            <CardContent>
-              <div className="flex justify-between">
-                <span>Subtotal</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <span>Subtotal</span>
 
-                <span>
-                  ₹{cartTotal.toLocaleString("en-IN")}
-                </span>
-              </div>
+              <span>
+                ₹{cartTotal.toLocaleString("en-IN")}
+              </span>
+            </div>
 
-              <Separator className="my-4" />
+            <hr
+              style={{
+                border: 0,
+                borderTop: "1px solid #e5e5e5",
+                margin: "20px 0",
+              }}
+            />
 
-              <div className="flex justify-between text-lg font-bold">
-                <span>Total</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "18px",
+                fontWeight: 700,
+              }}
+            >
+              <span>Total</span>
 
-                <span>
-                  ₹{cartTotal.toLocaleString("en-IN")}
-                </span>
-              </div>
+              <span>
+                ₹{cartTotal.toLocaleString("en-IN")}
+              </span>
+            </div>
 
-              <Button className="mt-6 w-full">
-                Proceed to Checkout
-              </Button>
-            </CardContent>
-          </Card>
-
+            <button
+              style={{
+                width: "100%",
+                marginTop: "24px",
+                padding: "12px",
+                border: "none",
+                borderRadius: "7px",
+                background: "#111827",
+                color: "#fff",
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+            >
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       </div>
     </main>
   );
+};
+
+const quantityButton = {
+  width: "32px",
+  height: "32px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: "1px solid #d4d4d4",
+  borderRadius: "6px",
+  background: "#fff",
+  cursor: "pointer",
 };
 
 export default Cart;

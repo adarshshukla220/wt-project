@@ -1,6 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import { CartProvider } from "@/context/CartContext";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/footer";
@@ -12,32 +14,33 @@ import Cart from "@/pages/Cart";
 
 const App = () => {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <Navbar />
+    <BrowserRouter>
+      <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-          <Route
-            path="/products/:id"
-            element={<ProductDetails />}
-          />
+        <Route
+          path="/products/:id"
+          element={<ProductDetails />}
+        />
 
-          <Route
-            path="/create-product"
-            element={<CreateProduct />}
-          />
+        <Route
+          path="/create-product"
+          element={<CreateProduct />}
+        />
 
-          <Route
-            path="/cart"
-            element={<Cart />}
-          />
-        </Routes>
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
+      </Routes>
 
-        <Footer />
-      </BrowserRouter>
-    </CartProvider>
+      <Footer />
+    </BrowserRouter>
   );
 };
 

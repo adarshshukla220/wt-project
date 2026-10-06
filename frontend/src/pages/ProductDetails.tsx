@@ -1,32 +1,31 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import {
+  Link,
+  useParams,
+} from "react-router-dom";
+
 import { useCart } from "@/context/CartContext";
+
 import type { Product } from "@/types/product";
 
 import { getProduct } from "@/services/product";
 
 import Loading from "@/components/Loading";
 
-import { Badge } from "@/components/ui/badge";
-
-import { Button } from "@/components/ui/button";
-
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-
 const ProductDetails = () => {
-  const { id } = useParams<{ id: string }>();
-const { addToCart } = useCart();
+  const { id } = useParams<{
+    id: string;
+  }>();
+
+  const { addToCart } = useCart();
+
   const [product, setProduct] =
     useState<Product | null>(null);
 
   const [loading, setLoading] =
     useState(true);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -54,87 +53,150 @@ const { addToCart } = useCart();
 
   if (error || !product) {
     return (
-      <main className="flex min-h-screen items-center justify-center">
+      <main
+        style={{
+          minHeight: "70vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+        }}
+      >
+        <div>
+          <h1>Product not found</h1>
 
-        <div className="text-center">
-
-          <h1 className="text-2xl font-bold">
-            {error || "Product not found"}
-          </h1>
-
-          <Button
-            className="mt-6"
+          <Link
+            to="/"
+            style={{
+              display: "inline-block",
+              marginTop: "20px",
+              padding: "10px 16px",
+              borderRadius: "7px",
+              background: "#111827",
+              color: "#fff",
+              textDecoration: "none",
+            }}
           >
-            <Link to="/">
-              Back to Products
-            </Link>
-          </Button>
-
+            Back to Products
+          </Link>
         </div>
-
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-muted/40 px-6 py-12">
+    <main
+      style={{
+        minHeight: "calc(100vh - 64px)",
+        background: "#f5f5f5",
+        padding: "48px 24px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          background: "#fff",
+          border: "1px solid #e5e5e5",
+          borderRadius: "12px",
+          padding: "32px",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "40px",
+          }}
+        >
+          <div
+            style={{
+              minHeight: "400px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#f5f5f5",
+              borderRadius: "10px",
+            }}
+          >
+            <img
+              src={product.image}
+              alt={product.name}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "400px",
+                objectFit: "contain",
+                padding: "32px",
+              }}
+            />
+          </div>
 
-      <div className="mx-auto max-w-6xl">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <span
+              style={{
+                width: "fit-content",
+                padding: "5px 10px",
+                borderRadius: "999px",
+                background: "#f5f5f5",
+                fontSize: "12px",
+              }}
+            >
+              {product.category}
+            </span>
 
-        <Card>
+            <h1
+              style={{
+                marginTop: "16px",
+                fontSize: "36px",
+              }}
+            >
+              {product.name}
+            </h1>
 
-          <CardContent className="p-8">
+            <p
+              style={{
+                marginTop: "20px",
+                color: "#737373",
+                lineHeight: 1.7,
+              }}
+            >
+              {product.description}
+            </p>
 
-            <div className="grid gap-10 md:grid-cols-2">
+            <strong
+              style={{
+                marginTop: "24px",
+                fontSize: "30px",
+              }}
+            >
+              ₹{product.price.toLocaleString("en-IN")}
+            </strong>
 
-              {/* Image */}
-              <div className="flex min-h-100 items-center justify-center rounded-lg bg-muted">
-
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="max-h-100 max-w-full object-contain p-8"
-                />
-
-              </div>
-
-              {/* Information */}
-              <div className="flex flex-col justify-center">
-
-                <Badge className="w-fit">
-                  {product.category}
-                </Badge>
-
-                <h1 className="mt-4 text-4xl font-bold">
-                  {product.name}
-                </h1>
-
-                <p className="mt-6 leading-7 text-muted-foreground">
-                  {product.description}
-                </p>
-
-                <p className="mt-8 text-3xl font-bold">
-                  ₹{product.price.toLocaleString("en-IN")}
-                </p>
-
-               <Button
-  size="lg"
-  className="mt-8"
-  onClick={() => addToCart(product)}
->
-  Add to Cart
-</Button>
-
-              </div>
-
-            </div>
-
-          </CardContent>
-
-        </Card>
-
+            <button
+              onClick={() => addToCart(product)}
+              style={{
+                marginTop: "24px",
+                padding: "13px",
+                border: "none",
+                borderRadius: "7px",
+                background: "#111827",
+                color: "#ffffff",
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
       </div>
-
     </main>
   );
 };

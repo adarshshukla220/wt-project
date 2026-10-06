@@ -23,9 +23,8 @@ interface CartContextType {
   cartTotal: number;
 }
 
-const CartContext = createContext<CartContextType | undefined>(
-  undefined,
-);
+const CartContext =
+  createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({
   children,
@@ -33,13 +32,20 @@ export const CartProvider = ({
   children: ReactNode;
 }) => {
   const [cart, setCart] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem("cart");
+    try {
+      const savedCart = localStorage.getItem("cart");
 
-    return savedCart ? JSON.parse(savedCart) : [];
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch {
+      return [];
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(cart),
+    );
   }, [cart]);
 
   const addToCart = (product: Product) => {
@@ -71,7 +77,9 @@ export const CartProvider = ({
 
   const removeFromCart = (productId: string) => {
     setCart((currentCart) =>
-      currentCart.filter((item) => item._id !== productId),
+      currentCart.filter(
+        (item) => item._id !== productId,
+      ),
     );
   };
 
@@ -113,7 +121,8 @@ export const CartProvider = ({
   );
 
   const cartTotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) =>
+      total + item.price * item.quantity,
     0,
   );
 

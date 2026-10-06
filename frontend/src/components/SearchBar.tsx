@@ -1,7 +1,5 @@
 import { Search } from "lucide-react";
 
-import { Input } from "@/components/ui/input";
-
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
@@ -12,19 +10,39 @@ const SearchBar = ({
   onChange,
 }: SearchBarProps) => {
   return (
-    <div className="relative mb-8">
+    <div
+      style={{
+        position: "relative",
+        marginBottom: "32px",
+      }}
+    >
+      <Search
+        size={18}
+        style={{
+          position: "absolute",
+          left: "14px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          color: "#737373",
+        }}
+      />
 
-      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-      <Input
+      <input
         value={value}
         onChange={(event) =>
           onChange(event.target.value)
         }
         placeholder="Search products..."
-        className="h-11 pl-10"
+        style={{
+          width: "100%",
+          height: "44px",
+          padding: "0 16px 0 42px",
+          border: "1px solid #d4d4d4",
+          borderRadius: "8px",
+          outline: "none",
+          background: "#ffffff",
+        }}
       />
-
     </div>
   );
 };

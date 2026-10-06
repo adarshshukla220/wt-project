@@ -2,16 +2,6 @@ import { Link } from "react-router-dom";
 
 import type { Product } from "@/types/product";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-
 interface ProductCardProps {
   product: Product;
 }
@@ -20,55 +10,100 @@ const ProductCard = ({
   product,
 }: ProductCardProps) => {
   return (
-    <Card className="overflow-hidden transition-all hover:-translate-y-1 hover:shadow-lg">
-
-      {/* Product Image */}
-      <div className="flex h-64 items-center justify-center bg-muted">
+    <div
+      style={{
+        overflow: "hidden",
+        border: "1px solid #e5e5e5",
+        borderRadius: "12px",
+        background: "#ffffff",
+      }}
+    >
+      <div
+        style={{
+          height: "256px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#f5f5f5",
+        }}
+      >
         <img
           src={product.image}
           alt={product.name}
-          className="h-full w-full object-contain p-6"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            padding: "24px",
+          }}
         />
       </div>
 
-      <CardHeader>
-        <h2 className="line-clamp-2 text-lg font-semibold">
+      <div style={{ padding: "20px" }}>
+        <h2
+          style={{
+            margin: "0 0 10px",
+            fontSize: "18px",
+            lineHeight: 1.4,
+          }}
+        >
           {product.name}
         </h2>
-      </CardHeader>
 
-      <CardContent>
-
-        <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">
+        <p
+          style={{
+            margin: "0 0 18px",
+            color: "#737373",
+            fontSize: "14px",
+            lineHeight: 1.5,
+          }}
+        >
           {product.description}
         </p>
 
-        <div className="flex items-center justify-between gap-3">
-
-          <span className="text-xl font-bold">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+          }}
+        >
+          <strong style={{ fontSize: "20px" }}>
             ₹{product.price.toLocaleString("en-IN")}
-          </span>
+          </strong>
 
-          <Badge variant="secondary">
+          <span
+            style={{
+              padding: "4px 10px",
+              borderRadius: "999px",
+              background: "#f5f5f5",
+              fontSize: "12px",
+            }}
+          >
             {product.category}
-          </Badge>
-
+          </span>
         </div>
 
-      </CardContent>
-
-      <CardFooter>
-        <Button
-          className="w-full"
-          
+        <Link
+          to={`/products/${product._id}`}
+          style={{
+            display: "block",
+            marginTop: "20px",
+            padding: "10px",
+            borderRadius: "7px",
+            background: "#111827",
+            color: "#ffffff",
+            textAlign: "center",
+            textDecoration: "none",
+            fontSize: "14px",
+            fontWeight: 600,
+          }}
         >
-          <Link to={`/products/${product._id}`}>
-            View Product
-          </Link>
-        </Button>
-      </CardFooter>
-
-    </Card>
+          View Product
+        </Link>
+      </div>
+    </div>
   );
 };
 

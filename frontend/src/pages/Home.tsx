@@ -8,18 +8,22 @@ import ProductGrid from "@/components/ProductGrid";
 import SearchBar from "@/components/SearchBar";
 import Loading from "@/components/Loading";
 
-import { Card } from "@/components/ui/card";
-
 const Home = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] =
+    useState<Product[]>([]);
+
   const [search, setSearch] = useState("");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
+
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
+
         const data = await getProducts();
 
         setProducts(data);
@@ -37,74 +41,92 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter(
-    (product) => {
-      const query = search.toLowerCase();
+  const query = search.toLowerCase().trim();
 
-      return (
-        product.name
-          .toLowerCase()
-          .includes(query) ||
-        product.category
-          .toLowerCase()
-          .includes(query)
-      );
-    },
+  const filteredProducts = products.filter(
+    (product) =>
+      product.name
+        .toLowerCase()
+        .includes(query) ||
+      product.category
+        .toLowerCase()
+        .includes(query),
   );
 
   return (
-    <main className="min-h-screen bg-muted/40">
-
-      <div className="mx-auto max-w-7xl px-6 py-10">
-
-        {/* Header */}
-        <div className="mb-8">
-
-          <h1 className="text-4xl font-bold tracking-tight">
+    <main
+      style={{
+        minHeight: "calc(100vh - 64px)",
+        background: "#f5f5f5",
+        padding: "40px 24px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+        }}
+      >
+        <div style={{ marginBottom: "32px" }}>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: "36px",
+              fontWeight: 700,
+            }}
+          >
             Products
           </h1>
 
-          <p className="mt-2 text-muted-foreground">
+          <p
+            style={{
+              marginTop: "8px",
+              color: "#737373",
+            }}
+          >
             Browse our latest products.
           </p>
-
         </div>
 
-        {/* Search */}
         <SearchBar
           value={search}
           onChange={setSearch}
         />
 
-        {/* Loading */}
         {loading && <Loading />}
 
-        {/* Error */}
         {!loading && error && (
-          <Card className="border-destructive p-6">
-
-            <p className="text-destructive">
-              {error}
-            </p>
-
-          </Card>
+          <div
+            style={{
+              padding: "20px",
+              border: "1px solid #ef4444",
+              borderRadius: "8px",
+              color: "#dc2626",
+              background: "#fff",
+            }}
+          >
+            {error}
+          </div>
         )}
 
-        {/* Products */}
         {!loading && !error && (
           <>
-            <div className="mb-5 text-sm text-muted-foreground">
+            <p
+              style={{
+                marginBottom: "20px",
+                color: "#737373",
+                fontSize: "14px",
+              }}
+            >
               {filteredProducts.length} products found
-            </div>
+            </p>
 
             <ProductGrid
               products={filteredProducts}
             />
           </>
         )}
-
       </div>
-
     </main>
   );
 };

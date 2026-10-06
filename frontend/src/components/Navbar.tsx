@@ -1,65 +1,117 @@
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/context/CartContext";
 
 const Navbar = () => {
   const { cartCount } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-
+    <header
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 50,
+        borderBottom: "1px solid #e5e5e5",
+        background: "#ffffff",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1280px",
+          height: "64px",
+          margin: "0 auto",
+          padding: "0 24px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Link
           to="/"
-          className="text-xl font-bold"
+          style={{
+            fontSize: "20px",
+            fontWeight: 700,
+            color: "#111827",
+            textDecoration: "none",
+          }}
         >
           Amazon Clone
         </Link>
 
-        <nav className="flex items-center gap-2">
-
-          <Button
-            variant="ghost"
+        <nav
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <Link
+            to="/"
+            style={navLinkStyle}
           >
-            <Link to="/">
-              Home
-            </Link>
-          </Button>
+            Home
+          </Link>
 
-          <Button
-            variant="ghost"
+          <Link
+            to="/create-product"
+            style={navLinkStyle}
           >
-            <Link to="/create-product">
-              Add Product
-            </Link>
-          </Button>
+            Add Product
+          </Link>
 
-          <Separator
-            orientation="vertical"
-            className="mx-2 h-6"
+          <div
+            style={{
+              width: "1px",
+              height: "24px",
+              background: "#d4d4d4",
+              margin: "0 8px",
+            }}
           />
 
-          <Button >
-            <Link to="/cart">
-              <ShoppingCart className="mr-2 h-4 w-4" />
+          <Link
+            to="/cart"
+            style={{
+              ...navLinkStyle,
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "#111827",
+              color: "#ffffff",
+            }}
+          >
+            <ShoppingCart size={17} />
 
-              Cart
+            <span>Cart</span>
 
-              {cartCount > 0 && (
-                <span className="ml-2 rounded-full bg-background px-2 py-0.5 text-xs text-foreground">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-          </Button>
-
+            {cartCount > 0 && (
+              <span
+                style={{
+                  background: "#ffffff",
+                  color: "#111827",
+                  borderRadius: "999px",
+                  padding: "2px 7px",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                }}
+              >
+                {cartCount}
+              </span>
+            )}
+          </Link>
         </nav>
       </div>
     </header>
   );
+};
+
+const navLinkStyle = {
+  padding: "8px 12px",
+  borderRadius: "6px",
+  color: "#374151",
+  textDecoration: "none",
+  fontSize: "14px",
+  fontWeight: 500,
 };
 
 export default Navbar;

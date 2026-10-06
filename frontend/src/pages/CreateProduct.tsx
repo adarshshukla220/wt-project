@@ -2,21 +2,6 @@ import { useState } from "react";
 
 import { createProduct } from "@/services/product";
 
-import { Button } from "@/components/ui/button";
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import { Input } from "@/components/ui/input";
-
-import { Label } from "@/components/ui/label";
-
-import { Textarea } from "@/components/ui/textarea";
-
 const CreateProduct = () => {
   const [form, setForm] = useState({
     name: "",
@@ -39,8 +24,7 @@ const CreateProduct = () => {
   ) => {
     setForm({
       ...form,
-      [event.target.name]:
-        event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -84,139 +68,154 @@ const CreateProduct = () => {
   };
 
   return (
-    <main className="min-h-screen bg-muted/40 px-6 py-12">
+    <main
+      style={{
+        minHeight: "calc(100vh - 64px)",
+        background: "#f5f5f5",
+        padding: "48px 24px",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "650px",
+          margin: "0 auto",
+          background: "#fff",
+          border: "1px solid #e5e5e5",
+          borderRadius: "12px",
+          padding: "32px",
+        }}
+      >
+        <h1
+          style={{
+            marginTop: 0,
+            fontSize: "28px",
+          }}
+        >
+          Create Product
+        </h1>
 
-      <div className="mx-auto max-w-2xl">
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+          }}
+        >
+          <label>
+            Product Name
 
-        <Card>
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="iPhone 17"
+              required
+              style={inputStyle}
+            />
+          </label>
 
-          <CardHeader>
-            <CardTitle className="text-2xl">
-              Create Product
-            </CardTitle>
-          </CardHeader>
+          <label>
+            Description
 
-          <CardContent>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              placeholder="Product description..."
+              rows={5}
+              required
+              style={{
+                ...inputStyle,
+                resize: "vertical",
+              }}
+            />
+          </label>
 
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
+          <label>
+            Price
+
+            <input
+              name="price"
+              type="number"
+              min="0"
+              value={form.price}
+              onChange={handleChange}
+              placeholder="99999"
+              required
+              style={inputStyle}
+            />
+          </label>
+
+          <label>
+            Image URL
+
+            <input
+              name="image"
+              value={form.image}
+              onChange={handleChange}
+              placeholder="https://..."
+              required
+              style={inputStyle}
+            />
+          </label>
+
+          <label>
+            Category
+
+            <input
+              name="category"
+              value={form.category}
+              onChange={handleChange}
+              placeholder="Electronics"
+              required
+              style={inputStyle}
+            />
+          </label>
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              padding: "12px",
+              border: "none",
+              borderRadius: "7px",
+              background: "#111827",
+              color: "#fff",
+              cursor: "pointer",
+              fontWeight: 600,
+            }}
+          >
+            {loading
+              ? "Creating..."
+              : "Create Product"}
+          </button>
+
+          {message && (
+            <p
+              style={{
+                textAlign: "center",
+                color: "#525252",
+              }}
             >
-
-              <div className="space-y-2">
-
-                <Label htmlFor="name">
-                  Product Name
-                </Label>
-
-                <Input
-                  id="name"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="iPhone 17"
-                  required
-                />
-
-              </div>
-
-              <div className="space-y-2">
-
-                <Label htmlFor="description">
-                  Description
-                </Label>
-
-                <Textarea
-                  id="description"
-                  name="description"
-                  value={form.description}
-                  onChange={handleChange}
-                  placeholder="Product description..."
-                  rows={5}
-                  required
-                />
-
-              </div>
-
-              <div className="space-y-2">
-
-                <Label htmlFor="price">
-                  Price
-                </Label>
-
-                <Input
-                  id="price"
-                  name="price"
-                  type="number"
-                  min="0"
-                  value={form.price}
-                  onChange={handleChange}
-                  placeholder="99999"
-                  required
-                />
-
-              </div>
-
-              <div className="space-y-2">
-
-                <Label htmlFor="image">
-                  Image URL
-                </Label>
-
-                <Input
-                  id="image"
-                  name="image"
-                  value={form.image}
-                  onChange={handleChange}
-                  placeholder="https://..."
-                  required
-                />
-
-              </div>
-
-              <div className="space-y-2">
-
-                <Label htmlFor="category">
-                  Category
-                </Label>
-
-                <Input
-                  id="category"
-                  name="category"
-                  value={form.category}
-                  onChange={handleChange}
-                  placeholder="Electronics"
-                  required
-                />
-
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={loading}
-              >
-                {loading
-                  ? "Creating..."
-                  : "Create Product"}
-              </Button>
-
-              {message && (
-                <p className="text-center text-sm text-muted-foreground">
-                  {message}
-                </p>
-              )}
-
-            </form>
-
-          </CardContent>
-
-        </Card>
-
+              {message}
+            </p>
+          )}
+        </form>
       </div>
-
     </main>
   );
+};
+
+const inputStyle = {
+  display: "block",
+  width: "100%",
+  marginTop: "7px",
+  padding: "11px 12px",
+  border: "1px solid #d4d4d4",
+  borderRadius: "7px",
+  outline: "none",
+  background: "#fff",
 };
 
 export default CreateProduct;
