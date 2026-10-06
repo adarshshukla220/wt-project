@@ -10,13 +10,13 @@ import products from "./router/product.routes.js";
 const app = new Hono();
 
 await connectDB()
-.then(() => console.log("Connected to MongoDB"))
-.catch((error) => console.error(error));
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.error(error));
 
 app.use(
   "*",
   cors({
-    origin: process.env.CLIENT_URL!,
+    origin: process.env.CLIENT_URL || "",
   }),
 );
 
@@ -34,4 +34,4 @@ serve({
   hostname: "0.0.0.0",
 });
 
-console.log("Server running at http://localhost:3000");
+console.log("Server running");
